@@ -21,23 +21,33 @@ func main() {
 
 	fuelConsumption, _ = reader.ReadString('\n')
 	// convert CRLF to LF
-	fuelConsumption = strings.Replace(fuelConsumption, "\n", "", -1)
+	fuelConsumption = strings.Replace(fuelConsumption, "\r\n", "", -1)
 
 	fmt.Println("Enter fuel price per liter.")
 	fmt.Println("------------------------------------------")
 	fmt.Print("-> ")
 
 	fuelPrice, _ = reader.ReadString('\n')
-	fuelPrice = strings.Replace(fuelPrice, "\n", "", -1)
+	fuelPrice = strings.Replace(fuelPrice, "\r\n", "", -1)
 
-	literPrice := calculateKilometerPrice(fuelConsumption, fuelPrice)
+	literPrice, err := calculateKilometerPrice(fuelConsumption, fuelPrice)
+	if err != nil {
+		fmt.Printf("An error occoured: %s", err)
+	}
 
 	fmt.Printf("Kilometer price of fuel is: %.4f €", literPrice)
 }
 
-func calculateKilometerPrice(fuelConsumption, fuelPrice string) float64 {
-	fuelConsumptionFloat, _ := strconv.ParseFloat(fuelConsumption, 64)
-	fuelPriceFloat, _ := strconv.ParseFloat(fuelPrice, 64)
+func calculateKilometerPrice(fuelConsumption, fuelPrice string) (float64, error) {
+	fuelConsumptionFloat, err := strconv.ParseFloat(fuelConsumption, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	fuelPriceFloat, err := strconv.ParseFloat(fuelPrice, 64)
+	if err != nil {
+		return 0, err
+	}
 
 	var literPrice float64
 
@@ -45,5 +55,5 @@ func calculateKilometerPrice(fuelConsumption, fuelPrice string) float64 {
 		literPrice = fuelConsumptionFloat * fuelPriceFloat / averageKilometers
 	}
 
-	return literPrice
+	return literPrice, nil
 }
