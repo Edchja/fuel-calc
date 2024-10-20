@@ -1,6 +1,7 @@
 package main
 
 import (
+	"edchja.de/fuel-calc/textformat"
 	"fmt"
 
 	"edchja.de/fuel-calc/logic"
@@ -10,21 +11,24 @@ func main() {
 	var fuelPrice string
 	var fuelConsumption string
 
-	logic.PrintFuelConsumption()
-	fuelConsumption, err := logic.FormatString(fuelConsumption)
+	textformat.PrintFuelConsumption()
+	fuelConsumption, err := textformat.ValidateAndFormatInput(fuelConsumption)
 	if err != nil {
-		fmt.Printf("An error occoured: %s", err)
+		fmt.Printf("An error occoured: %s\n", err)
+		return
 	}
 
-	logic.PrintFuelPrice()
-	fuelPrice, err = logic.FormatString(fuelPrice)
+	textformat.PrintFuelPrice()
+	fuelPrice, err = textformat.ValidateAndFormatInput(fuelPrice)
 	if err != nil {
-		fmt.Printf("An error occoured: %s", err)
+		fmt.Printf("An error occoured: %s\n", err)
+		return
 	}
 
 	literPrice, err := logic.CalculateKilometerPrice(fuelConsumption, fuelPrice)
 	if err != nil {
-		fmt.Printf("An error occoured: %s", err)
+		fmt.Printf("An error occoured: %s\n", err)
+		return
 	}
 
 	fmt.Printf("Kilometer price of fuel is: %.4f €", literPrice)
