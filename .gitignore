@@ -1,2 +1,6 @@
 # debug files
 __debug_bin
+
+.idea/
+!.idea/misc.xml
+!.idea/modules.xml
