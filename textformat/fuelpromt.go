@@ -10,29 +10,36 @@ import (
 
 var reader = bufio.NewReader(os.Stdin)
 
-func ValidateAndFormatInput(input string) (string, error) {
+func ValidateAndFormatInput() (string, error) {
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		return "", fmt.Errorf("could not read input")
+		return "", fmt.Errorf("could not read input %v", err)
 	}
 	input = strings.TrimSpace(input)
 
-	reg := regexp.MustCompile(`^-?\d+([.,]?\d+)?$`)
-	if !reg.MatchString(input) {
+	if input == "" {
+		return "", fmt.Errorf("input value can't be empty")
+	}
+
+	punctuationRegEx := regexp.MustCompile(`^-?\d+([.,]?\d+)?$`)
+	if !punctuationRegEx.MatchString(input) {
 		return "", fmt.Errorf("invalid input format")
 	}
 
-	return strings.NewReplacer(",", ".").Replace(input), nil
+	return strings.ReplaceAll(input, ",", "."), nil
 }
 
 func PrintFuelConsumption() {
 	fmt.Println("Enter fuel consumption per 100 kilometers.")
-	fmt.Println("------------------------------------------")
-	fmt.Print("-> ")
+	drawPrompt()
 }
 
 func PrintFuelPrice() {
 	fmt.Println("Enter fuel price per liter.")
+	drawPrompt()
+}
+
+func drawPrompt() {
 	fmt.Println("------------------------------------------")
 	fmt.Print("-> ")
 }
