@@ -3,33 +3,33 @@ package main
 import (
 	"edchja.de/fuel-calc/textformat"
 	"fmt"
+	"os"
 
 	"edchja.de/fuel-calc/logic"
 )
 
 func main() {
-	var fuelPrice string
-	var fuelConsumption string
-
 	textformat.PrintFuelConsumption()
-	fuelConsumption, err := textformat.ValidateAndFormatInput(fuelConsumption)
+	fuelConsumption, err := textformat.ValidateAndFormatInput()
 	if err != nil {
-		fmt.Printf("An error occoured: %s\n", err)
-		return
+		handleError(err)
 	}
 
 	textformat.PrintFuelPrice()
-	fuelPrice, err = textformat.ValidateAndFormatInput(fuelPrice)
+	fuelPrice, err := textformat.ValidateAndFormatInput()
 	if err != nil {
-		fmt.Printf("An error occoured: %s\n", err)
-		return
+		handleError(err)
 	}
 
 	literPrice, err := logic.CalculateKilometerPrice(fuelConsumption, fuelPrice)
 	if err != nil {
-		fmt.Printf("An error occoured: %s\n", err)
-		return
+		handleError(err)
 	}
 
-	fmt.Printf("Kilometer price of fuel is: %.4f €", literPrice)
+	fmt.Printf("Kilometer price of fuel is: %.2f €", literPrice)
+}
+
+func handleError(err error) {
+	fmt.Printf("An error occoured: %s\n", err)
+	os.Exit(1)
 }
