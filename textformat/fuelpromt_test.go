@@ -66,6 +66,6 @@ func TestValidateAndFormatInput_ReadError(t *testing.T) {
 	}
 }
 
-func (e *errorReader) Read(p []byte) (n int, err error) {
+func (e *errorReader) Read([]byte) (n int, err error) {
 	return 0, errors.New("simulated read error")
 }
