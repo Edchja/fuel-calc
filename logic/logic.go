@@ -7,22 +7,25 @@ import (
 
 const averageKilometers = 100
 
-func CalculateKilometerPrice(fuelConsumption, fuelPrice string) (float64, error) {
-	if fuelConsumption == "" || fuelPrice == "" {
-		return 0, errors.New("input values can't be empty")
-	}
-
-	fuelConsumptionFloat, err := strconv.ParseFloat(fuelConsumption, 64)
-	if err != nil {
-		return 0, errors.New("invalid fuel consumption value")
-	}
-
-	fuelPriceFloat, err := strconv.ParseFloat(fuelPrice, 64)
-	if err != nil {
-		return 0, errors.New("invalid fuel price value")
-	}
-
-	literPrice := (fuelConsumptionFloat * fuelPriceFloat) / averageKilometers
+func CalculateKilometerPrice(fuelConsumption, fuelPrice float64) (float64, error) {
+	literPrice := (fuelConsumption * fuelPrice) / averageKilometers
 
 	return literPrice, nil
+}
+
+func ParseToFloat(input string) (float64, error) {
+	if input == "" {
+		return 0, errors.New("input value can't be empty")
+	}
+
+	inputFloat, err := strconv.ParseFloat(input, 64)
+	if err != nil {
+		return 0, errors.New("invalid input value")
+	}
+
+	if inputFloat < 0 {
+		return 0, errors.New("input value can't be negative")
+	}
+
+	return inputFloat, nil
 }

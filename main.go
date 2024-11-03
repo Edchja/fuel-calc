@@ -21,7 +21,17 @@ func main() {
 		handleError(err)
 	}
 
-	literPrice, err := logic.CalculateKilometerPrice(fuelConsumption, fuelPrice)
+	fuelConsumptionFloat, err := logic.ParseToFloat(fuelConsumption)
+	if err != nil {
+		handleError(err)
+	}
+
+	fuelPriceFloat, err := logic.ParseToFloat(fuelPrice)
+	if err != nil {
+		handleError(err)
+	}
+
+	literPrice, err := logic.CalculateKilometerPrice(fuelConsumptionFloat, fuelPriceFloat)
 	if err != nil {
 		handleError(err)
 	}
