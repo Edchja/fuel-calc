@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-const zeroValue = 0.0
-
 func TestCalculateKilometerPrice_ValidInput(t *testing.T) {
 	fuelConsumption := 17.0
 	fuelPrice := 2.02
@@ -22,6 +20,7 @@ func TestCalculateKilometerPrice_ValidInput(t *testing.T) {
 }
 
 func TestCalculateKilometerPrice_ZeroValues(t *testing.T) {
+	zeroValue := 0.0
 	result, err := CalculateKilometerPrice(zeroValue, zeroValue)
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
