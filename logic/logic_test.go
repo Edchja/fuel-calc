@@ -45,7 +45,7 @@ func TestParseToFloat_ValidInput(t *testing.T) {
 
 func TestParseToFloat_EmptyInput(t *testing.T) {
 	input := ""
-	expectedErr := "input value can't be empty"
+	expectedErr := "entered value can't be empty"
 
 	_, err := ParseToFloat(input)
 	if err == nil || err.Error() != expectedErr {
@@ -55,7 +55,7 @@ func TestParseToFloat_EmptyInput(t *testing.T) {
 
 func TestParseToFloat_InvalidInput(t *testing.T) {
 	input := "abc"
-	expectedErr := "invalid input value"
+	expectedErr := "entered value invalid"
 
 	_, err := ParseToFloat(input)
 	if err == nil || err.Error() != expectedErr {
@@ -65,7 +65,7 @@ func TestParseToFloat_InvalidInput(t *testing.T) {
 
 func TestParseToFloat_NegativeInput(t *testing.T) {
 	input := "-5.0"
-	expectedErr := "input value can't be negative"
+	expectedErr := "entered value can't be negative"
 
 	_, err := ParseToFloat(input)
 	if err == nil || err.Error() != expectedErr {
