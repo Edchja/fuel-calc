@@ -10,20 +10,25 @@ import (
 
 var reader = bufio.NewReader(os.Stdin)
 
-func ValidateAndFormatInput() (string, error) {
+func ReadInput() (string, error) {
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		return "", fmt.Errorf("could not read input %v", err)
+		return "", fmt.Errorf("could not read: %v", err)
 	}
+
+	return ValidateInput(input)
+}
+
+func ValidateInput(input string) (string, error) {
 	input = strings.TrimSpace(input)
 
 	if input == "" {
-		return "", fmt.Errorf("input value can't be empty")
+		return "", fmt.Errorf("entered value can't be empty")
 	}
 
 	punctuationRegEx := regexp.MustCompile(`^-?\d+([.,]?\d+)?$`)
 	if !punctuationRegEx.MatchString(input) {
-		return "", fmt.Errorf("invalid input format")
+		return "", fmt.Errorf("entered value has invalid format")
 	}
 
 	return strings.ReplaceAll(input, ",", "."), nil
