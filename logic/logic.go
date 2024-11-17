@@ -2,18 +2,33 @@ package logic
 
 import (
 	"errors"
+	"fmt"
+	"os"
 	"strconv"
 )
 
-const averageKilometers = 100
+const (
+	averageKilometers  = 100
+	CalculatedResponse = "The price per kilometer is: %.2f €"
+)
 
-func CalculateKilometerPrice(fuelConsumption, fuelPrice float64) (float64, error) {
-	literPrice := (fuelConsumption * fuelPrice) / averageKilometers
+func CalculateConsumption(fuelConsumption string, fuelPrice string) float64 {
+	fuelConsumptionFloat, err := parseToFloat(fuelConsumption)
+	if err != nil {
+		HandleError(err)
+	}
 
-	return literPrice, nil
+	fuelPriceFloat, err := parseToFloat(fuelPrice)
+	if err != nil {
+		HandleError(err)
+	}
+
+	literPrice := (fuelConsumptionFloat * fuelPriceFloat) / averageKilometers
+
+	return literPrice
 }
 
-func ParseToFloat(input string) (float64, error) {
+func parseToFloat(input string) (float64, error) {
 	if input == "" {
 		return 0, errors.New("entered value can't be empty")
 	}
@@ -28,4 +43,9 @@ func ParseToFloat(input string) (float64, error) {
 	}
 
 	return inputFloat, nil
+}
+
+func HandleError(err error) {
+	fmt.Printf("An error occoured: %s\n", err)
+	os.Exit(1)
 }

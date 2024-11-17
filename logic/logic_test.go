@@ -6,27 +6,22 @@ import (
 )
 
 func TestCalculateKilometerPrice_ValidInput(t *testing.T) {
-	fuelConsumption := 17.0
-	fuelPrice := 2.02
+	fuelConsumption := "17.0"
+	fuelPrice := "2.02"
 	expected := 0.34
 
-	result, err := CalculateKilometerPrice(fuelConsumption, fuelPrice)
-	if err != nil {
-		t.Fatalf("expected no error, got %v", err)
-	}
+	result := CalculateConsumption(fuelConsumption, fuelPrice)
 	if roundFloat(result) != expected {
 		t.Errorf("expected %.2f, got %.2f", expected, result)
 	}
 }
 
 func TestCalculateKilometerPrice_ZeroValues(t *testing.T) {
-	zeroValue := 0.0
-	result, err := CalculateKilometerPrice(zeroValue, zeroValue)
-	if err != nil {
-		t.Fatalf("expected no error, got %v", err)
-	}
-	if roundFloat(result) != zeroValue {
-		t.Errorf("expected %.2f, got %.2f", zeroValue, result)
+	zeroValue := "0.0"
+	expected := 0.0
+	result := CalculateConsumption(zeroValue, zeroValue)
+	if roundFloat(result) != expected {
+		t.Errorf("expected %v, got %.2f", zeroValue, result)
 	}
 }
 
@@ -34,7 +29,7 @@ func TestParseToFloat_ValidInput(t *testing.T) {
 	input := "8.5"
 	expected := 8.5
 
-	result, err := ParseToFloat(input)
+	result, err := parseToFloat(input)
 	if err != nil {
 		t.Fatalf("expected no error, got %v", err)
 	}
@@ -47,7 +42,7 @@ func TestParseToFloat_EmptyInput(t *testing.T) {
 	input := ""
 	expectedErr := "entered value can't be empty"
 
-	_, err := ParseToFloat(input)
+	_, err := parseToFloat(input)
 	if err == nil || err.Error() != expectedErr {
 		t.Fatalf("expected error %v, got %v", expectedErr, err)
 	}
@@ -57,7 +52,7 @@ func TestParseToFloat_InvalidInput(t *testing.T) {
 	input := "abc"
 	expectedErr := "entered value invalid"
 
-	_, err := ParseToFloat(input)
+	_, err := parseToFloat(input)
 	if err == nil || err.Error() != expectedErr {
 		t.Fatalf("expected error %v, got %v", expectedErr, err)
 	}
@@ -67,7 +62,7 @@ func TestParseToFloat_NegativeInput(t *testing.T) {
 	input := "-5.0"
 	expectedErr := "entered value can't be negative"
 
-	_, err := ParseToFloat(input)
+	_, err := parseToFloat(input)
 	if err == nil || err.Error() != expectedErr {
 		t.Fatalf("expected error %v, got %v", expectedErr, err)
 	}
