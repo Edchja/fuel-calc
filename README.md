@@ -14,13 +14,19 @@ You can download it by visiting the official [downloads page](https://golang.org
 
 ## CLI (v2)
 
-> :information_source: Make sure you are in the root directory of the project.
+To use **fuel-calc** from any terminal, you'll need to clone the repository first
 
-If you want to be able to use **fuel-calc** from any terminal, you can install it by executing
+```sh
+git clone https://github.com/Edchja/fuel-calc.git
+```
+
+Next, install **fuel-calc**, with
 
 ```sh
 go install
 ```
+
+> :information_source: Make sure you are in the root directory of the project.
 
 Now, you can use the command `fuel-calc` from any terminal window :rocket:
 
